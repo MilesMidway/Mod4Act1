@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+    <script>
+
+        class Person 
+        {
+            _firstName;
+            _lastName;
+            _age;
+            _sex;
+
+            constructor(firstName, lastName, age, sex)
+            {
+                this.firstName = firstName;
+                this.lastName = lastName;
+                this.age = age;
+                this.sex = sex;
+            }
+
+            set firstName(value)
+            {
+                if (!Person.isAlphabetic(value))
+                {
+                    throw new Error("First name must contain only alphabetic characters.")
+                } 
+                this._firstName = value;
+            }
+            get firstName()
+            {
+                return this._firstName;
+            }
+
+            set lastName(value)
+            {
+                if (!Person.isAlphabetic(value))
+                {
+                    throw new Error("Last name must contain only alphabetic characters.")
+                } 
+                this._lastName = value;
+            }
+            get lastName()
+            {
+                return this._lastName;
+            }
+
+            set age(value)
+            {
+                if (!Person.isValidAge(value))
+                {
+                    throw new Error("Age not valid.")
+                }
+                this._age = value;
+            }
+            get age()
+            {
+                return this._age;
+            }
+
+            set sex(value)
+            {
+                if (!Person.isValidSex(value))
+                {
+                    throw new Error("Not a valid character.")
+                }
+                this._sex = value;
+            }
+            get sex()
+            {
+                return this._sex;
+            }
+
+            static isAlphabetic(value)
+            {
+                if (/^[A-Za-z]+$/.test(value))
+                {
+                    return true
+                } 
+                return false
+            }
+
+            static isValidAge(value)
+            {
+                if (!isNaN(value) && value >= 0 && value <= 150)
+                {
+                    return true
+                }
+                return false
+            }
+
+            static isValidSex(value)
+            {
+                if (value === "M" || value === "F")
+                {
+                    return true
+                }
+                return false
+            }
+        }
+
+        class Doctor extends Person
+        {
+
+        }
+
+        class Bill
+        {
+
+        }
+
+        class Patient
+        {
+
+        }
+
+        
+        // Testing area, delete all the contents below before pushing
+
+        
+        //const person = new Person("Mart", "Nangit", 20, "F");
+
+    </script>
+
+</head>
+
+<body>
+
+
+</body>
+
+</html>
