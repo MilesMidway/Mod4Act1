@@ -3,132 +3,271 @@
 <html>
 
 <head>
-
-    <script>
-
-        class Person 
-        {
-            _firstName;
-            _lastName;
-            _age;
-            _sex;
-
-            constructor(firstName, lastName, age, sex)
-            {
-                this.firstName = firstName;
-                this.lastName = lastName;
-                this.age = age;
-                this.sex = sex;
-            }
-
-            set firstName(value)
-            {
-                if (!Person.isAlphabetic(value))
-                {
-                    throw new Error("First name must contain only alphabetic characters.")
-                } 
-                this._firstName = value;
-            }
-            get firstName()
-            {
-                return this._firstName;
-            }
-
-            set lastName(value)
-            {
-                if (!Person.isAlphabetic(value))
-                {
-                    throw new Error("Last name must contain only alphabetic characters.")
-                } 
-                this._lastName = value;
-            }
-            get lastName()
-            {
-                return this._lastName;
-            }
-
-            set age(value)
-            {
-                if (!Person.isValidAge(value))
-                {
-                    throw new Error("Age not valid.")
-                }
-                this._age = value;
-            }
-            get age()
-            {
-                return this._age;
-            }
-
-            set sex(value)
-            {
-                if (!Person.isValidSex(value))
-                {
-                    throw new Error("Not a valid character.")
-                }
-                this._sex = value;
-            }
-            get sex()
-            {
-                return this._sex;
-            }
-
-            static isAlphabetic(value)
-            {
-                if (/^[A-Za-z]+$/.test(value))
-                {
-                    return true
-                } 
-                return false
-            }
-
-            static isValidAge(value)
-            {
-                if (!isNaN(value) && value >= 0 && value <= 150)
-                {
-                    return true
-                }
-                return false
-            }
-
-            static isValidSex(value)
-            {
-                if (value === "M" || value === "F")
-                {
-                    return true
-                }
-                return false
-            }
+    <style>
+        .cover {
+            text-align: center;
+            align-items: center;
+            justify-content: center;
+            display: flex;
         }
-
-        class Doctor extends Person
-        {
+        h1 {
+            margin-top: 10px;
+            text-align: center;
+            display: block;
+        }
+        .infoContainer {
+            border-style: solid;
+            border-radius: 20px;
+            text-align: center;
+            margin-right: 50px;
 
         }
-
-        class Bill
-        {
-
+        .billContainer {
+            border-style: solid;
+            border-radius: 20px;
+            text-align: left;
+            display: none;
+            text-align: center;
+        }
+        span {
+            display: inline-block;
+            border-bottom: 1px solid black;
+            line-height: 0;
         }
 
-        class Patient
-        {
-
+        .pair-info {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
         }
 
+        .item-info {
+            display: flex;
+            flex-direction: column;
+            text-align: left;
+            margin: 0 10px; 
+        }
         
-        // Testing area, delete all the contents below before pushing
+        .bill-info {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+        }
 
+        label {
+            font-size: medium;
+        }
         
-        //const person = new Person("Mart", "Nangit", 20, "F");
+        p {
+            font-size: small;
+            font-weight: bold;
+        }
+        
+        button {
+            margin: 10px;
+        }
 
-    </script>
+        .form-container {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start; 
+        }
+
+        .form-item {
+            display: flex;
+            align-items: center; 
+            margin-bottom: 10px;
+        }
+
+        .form-item label {
+            text-align: right;
+            min-width: 150px;
+            font-size: 15px;
+        }
+
+        .form-item input {
+            flex-grow: 1; 
+            font-size: small;
+            margin-left: 5px;
+            margin-right: 20px;
+        }
+
+    </style>
+
+    <script src="Mod4Act1.js"></script>
 
 </head>
 
 <body>
 
+    <h1>Hospital Billing System</h1>
+    <div class="cover">   
+        <div class="infoContainer">
+            <form>
+                    <h2>Patient Information</h2>
+                    <div class="form-item">
+                        <label for="firstName">First Name:</label>
+                        <input type="text" id="firstName" required><br>
+                    </div>
 
+                    <div class="form-item">
+                        <label for="lastName">Last Name:</label>
+                        <input type="text" id="lastName" required><br>
+
+                    </div>
+
+                    <div class="form-item">
+                        <label for="patientId">Patient ID:</label>
+                        <input type="number" id="patientId" placeholder="number is required" required><br>
+                    </div>
+
+                    <div class="form-item">
+                        <label for="age">Age:</label>
+                        <input type="number" id="age" required><br>
+                    </div>
+
+                    <div class="form-item">
+                        <label for="sex">Sex:</label>
+                        <input type="text" id="sex" placeholder="M or F" required><br>
+                    </div>
+
+                    <div class="form-item">
+                        <label for="birthDate">Birth Date:</label>
+                        <input type="text" id="birthDate" placeholder="YYY/MM/DD" required><br>
+                    </div>
+
+                    <div class="form-item">
+                        <label for="admitDate">Admit Date:</label>
+                        <input type="text" id="admitDate" placeholder="YYY/MM/DD" required><br>
+                    </div>
+                    
+                    <div class="form-item">
+                        <label for="dischargeDate">Discharge Date:</label>
+                        <input type="text" id="dischargeDate" placeholder="YYY/MM/DD" required><br>
+                    </div>
+
+                    <h2>Doctor Information</h2>
+
+                    <div class="form-item">
+                        <label for="doctorFirstName">Doctor's First Name:</label>
+                        <input type="text" id="doctorFirstName" required><br>
+                    </div>
+
+                    <div class="form-item">
+                        <label for="doctorLastName">Doctor's LastName:</label>
+                        <input type="text" id="doctorLastName" required><br>
+                    </div>
+
+                    <div class="form-item">
+                        <label for="doctorSpecialty">Doctor's Specialty:</label>
+                        <input type="text" id="doctorSpecialty" required><br>
+                    </div>
+
+                    <h2>Bill Information</h2>
+
+                    <div class="form-item">
+                        <label for="pharmacyCharge">Pharmacy Charges:</label>
+                        <input type="number" id="pharmacyCharge" required><br>
+                    </div>
+
+                    <div class="form-item">
+                        <label for="doctorFee">Doctor Fee:</label>
+                        <input type="number" id="doctorFee" required><br>
+                    </div>
+
+                    <div class="form-item">
+                        <label for="roomCharge">Room Charge:</label>
+                        <input type="number" id="roomCharge" required><br>
+                    </div>
+
+                    <button type="button" onclick="generateBill()">Generate Bill</button>
+            </form>
+
+        </div>
+
+        <div id="billContainer" class="billContainer">
+
+            <h2>Official Hospital Bill</h2>
+
+            <h4><span style="width: 200px;">&nbsp;</span>Patient Information<span style="width: 200px;">&nbsp;</span></h4>
+
+            <div class="pair-info">
+                <div class="item-info">
+                    <label>Patient Name:</label>
+                    <p id="bPatientName"></p>
+                </div>
+                <div class="item-info">
+                    <label>Patient ID:</label>
+                    <p id="bPatientId"></p>
+                </div>
+            </div>
+            
+            <div class="pair-info">
+                <div class="item-info">
+                    <label>Age:</label>
+                    <p id="bAge"></p>
+                </div>
+                <div class="item-info">
+                    <label>Birthdate:</label>
+                    <p id="bBirthDate"></p>
+                </div>
+            </div>
+
+            <div class="pair-info">
+                <div class="item-info">
+                    <label>Sex:</label>
+                    <p id="bSex"></p>
+                </div>
+            </div>
+
+            <hr>
+
+            <div class="pair-info">
+                <div class="item-info">
+                    <label>Admission Date:</label>
+                    <p id="bAdmitDate"></p>
+                </div>
+                <div class="item-info">
+                    <label>Discharge Date:</label>
+                    <p id="bDischargeDate"></p>
+                </div>
+            </div>
+
+            <h4><span style="width: 205px;">&nbsp;</span>Doctor Information<span style="width: 205px;">&nbsp;</span></h4>
+
+            <div class="pair-info">
+                <div class="item-info">
+                    <label>Attending Doctor's Name:</label>
+                    <p id="bDoctorName"></p>
+                </div>
+                <div class="item-info">
+                    <label>Specialization:</label>
+                    <p id="bDoctorSpecialty"></p>
+                </div>
+            </div>
+
+            <h4><span style="width: 225px;">&nbsp;</span>Hospital Fees<span style="width: 225px;">&nbsp;</span></h4>
+
+            <div class="bill-info">
+                <div class="item-info">
+                    <label>Pharmacy Charge:</label>
+                    <p id="bPharmacyCharge"></p>
+                </div>
+                <div class="item-info">
+                    <label>Doctor Fee:</label>
+                    <p id="bDoctorFee"></p>
+                </div>
+                <div class="item-info">
+                    <label>Room Charge:</label>
+                    <p id="bRoomCharge"></p>
+                </div>
+                <div class="item-info">
+                    <label>Total Fee:</label>
+                    <p id="bTotal"></p>
+                </div>
+            </div>
+        </div>
+    </div>
 </body>
 
 </html>
