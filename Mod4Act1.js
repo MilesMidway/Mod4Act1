@@ -302,6 +302,12 @@ class Patient extends Person
             alert("Admit Date must not be empty");
             throw new Error();
         }
+        else if (!this.isValidAdmitDate(value))
+        {
+            this.hasError++;
+            alert("Admit Date is must not be earlier than or equal to Birth Date.");
+            throw new Error();
+        }
         this._admitDate = value;
     }
     get admitDate()
@@ -315,6 +321,12 @@ class Patient extends Person
         {
             Patient.hasError++;
             alert("Discharge Date must not be empty");
+            throw new Error();
+        }
+        else if (!this.isValidDischargeDate(value))
+        {
+            this.hasError++;
+            alert("Discharge Date must not be earlier than or equal to Admittance Date.");
             throw new Error();
         }
         this._dischargeDate = value;
@@ -340,6 +352,13 @@ class Patient extends Person
         return `${month} ${day}, ${year}`;
     }
     
+    isValidAdmitDate(value){ 
+        return value.getTime() > this.birthDate.getTime();
+    }
+
+    isValidDischargeDate(value){  
+        return value.getTime() > this.admitDate.getTime();
+    }   
 }
 
 class Bill
