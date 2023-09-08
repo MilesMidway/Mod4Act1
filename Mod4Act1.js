@@ -14,7 +14,6 @@ class Person
         this.age = age;
         this.birthDate = new Date(birthDate);
         this.sex = sex;
-        
     }
 
     set firstName(value)
@@ -82,6 +81,13 @@ class Person
     
     set birthDate(value)
     {
+        console.log(value);
+        if (!(value instanceof Date) || isNaN(value.getTime()))
+        {
+            Person.hasError++;
+            alert("Birth Date must not be empty");
+            throw new Error();
+        }
         this._birthDate = value;
     }
     get birthDate()
@@ -290,6 +296,12 @@ class Patient extends Person
 
     set admitDate(value)
     {
+        if (!(value instanceof Date) || isNaN(value.getTime()))
+        {
+            Patient.hasError++;
+            alert("Admit Date must not be empty");
+            throw new Error();
+        }
         this._admitDate = value;
     }
     get admitDate()
@@ -299,6 +311,12 @@ class Patient extends Person
 
     set dischargeDate(value)
     {
+        if (!(value instanceof Date) || isNaN(value.getTime()))
+        {
+            Patient.hasError++;
+            alert("Discharge Date must not be empty");
+            throw new Error();
+        }
         this._dischargeDate = value;
     }
     get dischargeDate()
