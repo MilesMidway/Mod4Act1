@@ -62,10 +62,15 @@ class Person
 
     set age(value)
     {
+        if (isNaN(value) || value === "") {
+            Person.hasError++;
+            alert("Age must be a number and must not be empty");
+            throw new Error();
+        }
         if (!Person.isValidAge(value))
         {
             Person.hasError++;
-            alert("Age not valid.");
+            alert("Age not possible");
             throw new Error();
         }
         this._age = value;
@@ -77,12 +82,6 @@ class Person
     
     set birthDate(value)
     {
-        if (value == "")
-        {
-            Person.hasError++;
-            alert("Birth Date must not be empty");
-            throw new Error();
-        }
         this._birthDate = value;
     }
     get birthDate()
@@ -95,7 +94,7 @@ class Person
         if (!Person.isValidSex(value))
         {
             Person.hasError++;
-            alert("Invalid characted in Sex field.");
+            alert("Invalid character or empty input in Sex field.");
             throw new Error();
         }
         this._sex = value;
@@ -103,15 +102,6 @@ class Person
     get sex()
     {
         return this._sex;
-    }
-
-    static isAlphabetic(value)
-    {
-        if (/^[A-Za-z]+$/.test(value))
-        {
-            return true;
-        } 
-        return false;
     }
 
     fullName()
@@ -126,11 +116,20 @@ class Person
         const day = this.birthDate.getDate();
         return `${month} ${day}, ${year}`;
     }
+
+    static isAlphabetic(value)
+    {
+        if (/^[A-Za-z]+$/.test(value))
+        {
+            return true;
+        } 
+        return false;
+    }
     
 
     static isValidAge(value)
     {
-        if (!isNaN(value) && value >= 0 && value <= 150)
+        if (value >= 0 && value <= 150)
         {
             return true;
         }
@@ -139,7 +138,7 @@ class Person
 
     static isValidSex(value)
     {
-        if (value === "M" || value === "F" || value === "")
+        if (value === "M" || value === "F")
         {
             return true;
         }
@@ -155,22 +154,97 @@ class Doctor extends Person
     constructor(firstName, lastName, specialty)
     {
         Doctor.hasError = 0;
-        super(firstName, lastName, 0, ".", "");
+        super(firstName, lastName, age, birthDate, sex);
         this.specialty = specialty;
         
     }
 
-    set firstName(value) {
+    set firstName(value)
+    {
+        if (value.trim() === "")
+        {
+            Doctor.hasError++;
+            alert("Doctor First Name field must not be empty.");
+            throw new Error();
+        }
+        if (!Doctor.isAlphabetic(value))
+        {
+            Doctor.hasError++;
+            alert("Doctor First Name must contain only alphabetical characters.");
+            throw new Error();
+        }  
         this._firstName = value;
     }
 
+    set lastName(value)
+    {
+        if (value.trim() === "")
+        {
+            Doctor.hasError++;
+            alert("Doctor Last Name field must not be empty.");
+            throw new Error();
+        }
+        if (!Doctor.isAlphabetic(value))
+        {
+            Doctor.hasError++;
+            alert("Doctor Last Name must contain only alphabetical characters.");
+            throw new Error();
+        }  
+        this._lastName = value;
+    }
+
+    set age(value)
+    {
+        this._age = value;
+    }
+    get age()
+    {
+        return this.age = value;
+    }
+
+    set birthDate(value)
+    {
+        this._birthDate = value;
+    }
+    get birthDate()
+    {
+        return this._birthDate;
+    }
+
+    set sex(value)
+    {
+        this._sex = value;
+    }
+    get sex()
+    {
+        return this._sex;
+    }
+    
+
     set specialty(value)
     {
+        var lettersOnly = /^[A-Za-z]+$/;
+
+        if (!lettersOnly.test(value))
+        {
+            Doctor.hasError++;
+            alert("Doctor specialization must not be empty and only contain alphabetical characters");
+            throw new Error();
+        }
         this._specialty = value;
     }
     get specialty()
     {
         return this._specialty;
+    }
+
+    static isAlphabetic(value)
+    {
+        if (/^[A-Za-z]+$/.test(value))
+        {
+            return true;
+        } 
+        return false;
     }
 }
 
@@ -192,8 +266,12 @@ class Patient extends Person
         this.dischargeDate = new Date(dischargeDate);
     }
 
-    set patientId(value)
-    {
+    set patientId(value) {
+        if (typeof value !== 'string' || value.trim() === "") {
+            Patient.hasError++;
+            alert("Invalid patient ID. It must not be blank and accept numbers only.");
+            throw new Error();
+        }
         this._patientId = value;
     }
     get patientId()
@@ -265,6 +343,11 @@ class Bill
 
     set pharmacyCharge(value)
     {
+        if (isNaN(value) || value === "") {
+            Bill.hasError++;
+            alert("Pharmacy Charge must be a number and must not be empty");
+            throw new Error();
+        }
         this._pharmacyCharge = value; 
     }
     get pharmacyCharge()
@@ -274,7 +357,11 @@ class Bill
 
     set doctorFee(value)
     {
-
+        if (isNaN(value) || value === "") {
+            Bill.hasError++;
+            alert("Doctor Fee must be a number and must not be empty");
+            throw new Error();
+        }
         this._doctorFee = value;
     }
     get doctorFee()
@@ -284,6 +371,11 @@ class Bill
 
     set roomCharge(value)
     {
+        if (isNaN(value) || value === "") {
+            Bill.hasError++;
+            alert("Room Charge must be a number and must not be empty");
+            throw new Error();
+        }
         this._roomCharge = value;
     }
     get roomCharge()
@@ -352,3 +444,4 @@ function generateBill()
     document.getElementById("bRoomCharge").innerHTML = bill.roomCharge;
     document.getElementById("bTotal").innerHTML = bill.total();
 }
+
